@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Products, UserData, InventoryTransaction, Suppliers, ProductSuppliers;
+DROP TABLES IF EXISTS Products, UserData, InventoryTransaction, Suppliers, ProductSuppliers
 
 CREATE TABLE Products(
     product_id SERIAL PRIMARY KEY,
@@ -42,4 +42,9 @@ CREATE TABLE ProductSuppliers(
 );
 
 INSERT INTO Products (product_name, product_colour, product_type, product_quantity, product_price, product_size) VALUES
-('Fuchsia','Pink','Acrylic',5,2.00,'75ml tube',)
+('Fuchsia',
+'Pink',
+'Acrylic',
+5,
+2.00,
+'75ml tube');

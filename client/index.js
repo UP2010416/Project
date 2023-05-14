@@ -1,12 +1,14 @@
 async function getProductsTable(){
-    const response = await fetch ('getProductsTable')
+    const response = await fetch ('getProducts');
     let obj;
     let table;
     if (response.ok){
-        obj = await response.json()
-        console.log(obj)
+        obj = await response.json();
+        console.log(obj);
     } else {
-        obj = [{msg : "failed to load table"}]
-        console.log(obj)
+        obj = [{msg : "failed to load table"}];
+        console.log(obj);
     }
 }
+
+getProductsTable()
