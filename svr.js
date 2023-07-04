@@ -1,6 +1,21 @@
 import express from 'express';
+import * as db from './productdetails.js';
 
 const app = express();
-app.use(express.static('client'));
-app.listen(8080);
 
+app.use(express.static('client', { extensions: ['html']}));
+
+async function getTable(req, res){
+    res.json(await db.getProductsTable());
+}
+
+function asyncWrap(f) {
+  return (req, res, next) => {
+    Promise.resolve(f(req, res, next))
+      .catch((e) => next(e || new Error()));
+  };
+}
+
+app.get('/getProducts', asyncWrap(getTable));
+
+app.listen(8080);
