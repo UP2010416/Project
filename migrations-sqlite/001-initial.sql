@@ -1,7 +1,11 @@
-DROP TABLES IF EXISTS Products, UserData, InventoryTransaction, Suppliers, ProductSuppliers
+DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS UserData;
+DROP TABLE IF EXISTS InventoryTransaction;
+DROP TABLE IF EXISTS Suppliers;
+DROP TABLE IF EXISTS ProductSuppliers;
 
 CREATE TABLE Products(
-    product_id SERIAL PRIMARY KEY,
+    product_id INTEGER PRIMARY KEY,
     product_name VARCHAR(50) NOT NULL,
     product_colour VARCHAR(40) NOT NULL,
     product_type VARCHAR(40) NOT NULL,
@@ -41,10 +45,7 @@ CREATE TABLE ProductSuppliers(
     PRIMARY KEY (supplier_id, product_id)
 );
 
-INSERT INTO Products (product_name, product_colour, product_type, product_quantity, product_price, product_size) VALUES
-('Fuchsia',
-'Pink',
-'Acrylic',
-5,
-2.00,
-'75ml tube');
+INSERT INTO Products (product_name, product_colour, product_type, product_quantity, product_price, product_size)
+VALUES ('Fuchsia', 'Pink', 'Acrylic', 5, 2.00, '75ml tube');
+INSERT INTO Products (product_name, product_colour, product_type, product_quantity, product_price, product_size)
+VALUES ('Bottle Green', 'Green', 'Matte', 3, 1.00, '100ml tube');

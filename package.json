@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/UP2010416/Project/issues"
   },
-  "homepage": "https://github.com/UP2010416/Project#readme"
+  "homepage": "https://github.com/UP2010416/Project#readme",
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2"
+  }
 }

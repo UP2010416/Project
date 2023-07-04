@@ -1,9 +1,9 @@
 import express from 'express';
-import * as db from './database.js';
+import * as db from './productdetails.js';
 
 const app = express();
 
-app.use(express.static('client', { extensions: ['htm;']}));
+app.use(express.static('client', { extensions: ['html']}));
 
 async function getTable(req, res){
     res.json(await db.getProductsTable());

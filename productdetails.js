@@ -15,5 +15,10 @@ async function init() {
 
 export async function getProductsTable(){
     const db = await dbConn;
-    return db.all('SELECT * FROM Products')
+    return db.all('SELECT * FROM Products');
+}
+
+export async function listMessages() {
+  const db = await dbConn;
+  return db.all('SELECT * FROM Messages ORDER BY time DESC LIMIT 10');
 }
