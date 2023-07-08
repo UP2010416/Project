@@ -15,7 +15,9 @@ function asyncWrap(f) {
       .catch((e) => next(e || new Error()));
   };
 }
-
+app.get('/express_backend', (req, res) => {
+  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
+});
 app.get('/getProducts', asyncWrap(getTable));
 
 app.listen(8080);
