@@ -10,11 +10,7 @@ sql.on('error', (err) => {
 })
 
 export async function getProductsTable(){
-    const db = await dbConn;
-    return db.all('SELECT * FROM Products');
-}
-
-export async function listMessages() {
-  const db = await dbConn;
-  return db.all('SELECT * FROM Messages ORDER BY time DESC LIMIT 10');
+    const q = 'SELECT * FROM Products;';
+    const result = await sql.query(q);
+    return result.rows;
 }
