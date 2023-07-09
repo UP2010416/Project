@@ -1,17 +1,13 @@
-import { open } from 'sqlite';
-import sqlite3 from 'sqlite3';
+import config from './config.js';
+import Postgres from 'pg';
 
-const dbConn = init();
+const sql = new Postgres.Client(config);
+sql.connect();
 
-async function init() {
-  const db = await open({
-    filename: './database.sqlite',
-    driver: sqlite3.Database,
-    verbose: true
-  });
-  await db.migrate({ migrationsPath: './migrations-sqlite' });
-  return db;
-}
+sql.on('error', (err) => {
+  console.error('SQL Fail', err);
+  sql.end();
+})
 
 export async function getProductsTable(){
     const db = await dbConn;

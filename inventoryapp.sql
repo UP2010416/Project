@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS InventoryTransaction;
 DROP TABLE IF EXISTS Suppliers;
 DROP TABLE IF EXISTS ProductSuppliers;
 
-CREATE TABLE Products(
+CREATE TABLE IF NOT EXISTS Products(
     product_id INTEGER PRIMARY KEY,
     product_name VARCHAR(50) NOT NULL,
     product_colour VARCHAR(40) NOT NULL,
@@ -15,13 +15,13 @@ CREATE TABLE Products(
 
 );
 
-CREATE TABLE UserData(
+CREATE TABLE IF NOT EXISTS UserData(
     user_id SERIAL PRIMARY KEY,
     user_username VARCHAR(30) NOT NULL,
     user_passwordhash text NOT NULL
 );
 
-CREATE TABLE InventoryTransaction(
+CREATE TABLE IF NOT EXISTS InventoryTransaction(
     transaction_id SERIAL PRIMARY KEY,
     product_id INTEGER REFERENCES Products(product_id),
     user_id INTEGER REFERENCES UserData(user_id),
@@ -30,7 +30,7 @@ CREATE TABLE InventoryTransaction(
     transaction_type VARCHAR(40) NOT NULL
 );
 
-CREATE TABLE Suppliers(
+CREATE TABLE IF NOT EXISTS Suppliers(
     supplier_id SERIAL PRIMARY KEY,
     supplier_name VARCHAR(50) NOT NULL,
     supplier_phone VARCHAR(15),
@@ -39,7 +39,7 @@ CREATE TABLE Suppliers(
     supplier_postcode varchar(9)
 );
 
-CREATE TABLE ProductSuppliers(
+CREATE TABLE IF NOT EXISTS ProductSuppliers(
     supplier_id INTEGER REFERENCES Suppliers(supplier_id),
     product_id INTEGER REFERENCES Products(product_id),
     PRIMARY KEY (supplier_id, product_id)
