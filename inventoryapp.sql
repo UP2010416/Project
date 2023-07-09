@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS Suppliers;
 DROP TABLE IF EXISTS ProductSuppliers;
 
 CREATE TABLE IF NOT EXISTS Products(
-    product_id INTEGER PRIMARY KEY,
+    product_id SERIAL PRIMARY KEY,
     product_name VARCHAR(50) NOT NULL,
     product_colour VARCHAR(40) NOT NULL,
     product_type VARCHAR(40) NOT NULL,
