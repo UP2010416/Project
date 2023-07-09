@@ -1,32 +1,32 @@
 import React, { Component } from 'react';
 
-async function getProductsTable(){
-  try{
-    const response = await fetch ('getProducts');
+async function getProductsTable() {
+  try {
+    const response = await fetch('getProducts');
     const table = document.querySelector('.table');
     let obj;
-    if (response.ok){
-        obj = await response.json();
-        const link1 = '<a href="update">Update</a>';
-        const link2 = '<a href="delete">Delete</a>';
-        for (let i = 0; i < obj.length; i++){
-            let record = Object.entries(obj[i]);
-            let newRow = table.insertRow(-1);
-            for (let j = 0; j < record.length; j++){
-                let newCell = newRow.insertCell(j);
-                let newText = document.createTextNode(record[j][1]);
-                newCell.appendChild(newText);
-            }
-            let actionCell = newRow.insertCell(-1);
-            actionCell.innerHTML = link1 + ' ' + link2;
+    if (response.ok) {
+      obj = await response.json();
+      const link1 = '<a href="update">Update</a>';
+      const link2 = '<a href="delete">Delete</a>';
+      for (let i = 0; i < obj.length; i++) {
+        const record = Object.entries(obj[i]);
+        const newRow = table.insertRow(-1);
+        for (let j = 0; j < record.length; j++) {
+          const newCell = newRow.insertCell(j);
+          const newText = document.createTextNode(record[j][1]);
+          newCell.appendChild(newText);
         }
+        const actionCell = newRow.insertCell(-1);
+        actionCell.innerHTML = link1 + ' ' + link2;
+      }
 
-        console.log(obj);
-        console.log(Object.entries(obj[0]));
-        console.log(obj[1]);
+      console.log(obj);
+      console.log(Object.entries(obj[0]));
+      console.log(obj[1]);
     } else {
-        obj = [{msg : "failed to load table"}];
-        console.log(obj);
+      obj = [{ msg: 'failed to load table' }];
+      console.log(obj);
     }
   } catch (error) {
     console.log('Error fetching data:', error);
@@ -35,13 +35,13 @@ async function getProductsTable(){
 
 class App extends Component {
   state = {
-    data: null
+    data: null,
   };
 
   async componentDidMount() {
-    try{
+    try {
       const res = await this.callBackendAPI();
-      this.setState({data: res.express});
+      this.setState({ data: res.express });
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +52,7 @@ class App extends Component {
     const body = await response.json();
 
     if (response.status !== 200) {
-      throw Error(body.message)
+      throw Error(body.message);
     }
     return body;
   };

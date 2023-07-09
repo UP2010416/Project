@@ -5,7 +5,7 @@
         "node": true
     },
     "extends": [
-        "standard",
+        "portsoc",
         "plugin:react/recommended"
     ],
     "parserOptions": {
@@ -16,5 +16,10 @@
         "react"
     ],
     "rules": {
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }

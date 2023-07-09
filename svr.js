@@ -3,10 +3,10 @@ import * as db from './productdetails.js';
 
 const app = express();
 
-app.use(express.static('client', { extensions: ['html']}));
+app.use(express.static('client', { extensions: ['html'] }));
 
-async function getTable(req, res){
-    res.json(await db.getProductsTable());
+async function getTable(req, res) {
+  res.json(await db.getProductsTable());
 }
 
 function asyncWrap(f) {
@@ -15,9 +15,7 @@ function asyncWrap(f) {
       .catch((e) => next(e || new Error()));
   };
 }
-app.get('/express_backend', (req, res) => {
-  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
-});
+
 app.get('/getProducts', asyncWrap(getTable));
 
 app.listen(8080);

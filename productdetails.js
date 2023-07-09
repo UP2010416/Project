@@ -7,10 +7,10 @@ sql.connect();
 sql.on('error', (err) => {
   console.error('SQL Fail', err);
   sql.end();
-})
+});
 
-export async function getProductsTable(){
-    const q = 'SELECT * FROM Products;';
-    const result = await sql.query(q);
-    return result.rows;
+export async function getProductsTable() {
+  const q = 'SELECT * FROM Products;';
+  const result = await sql.query(q);
+  return result.rows;
 }
