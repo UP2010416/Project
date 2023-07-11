@@ -21,7 +21,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "setuppg": "createdb inventoryapp && psql inventoryapp < inventoryapp.sql"
+    "setuppg": "createdb inventoryapp && psql inventoryapp < inventoryapp.sql",
+    "lint": "npx eslint svr.js productdetails.js config.js src/App.js src/index.js",
+    "lintfix": "npx eslint --fix svr.js productdetails.js config.js src/App.js src/index.js"
   },
   "eslintConfig": {
     "extends": [
