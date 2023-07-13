@@ -86,30 +86,4 @@ class App extends Component {
 
 getProductsTable();
 
-// function App() {
-//   return (
-//     <div id="container">
-//         <header>
-//             <h1 className="title">Product Details</h1>
-//         </header>
-//         <div id="product-table">
-//             <table className="table">
-//                 <thead>
-//                     <tr>
-//                         <th>ID</th>
-//                         <th>Name</th>
-//                         <th>Colour</th>
-//                         <th>Type</th>
-//                         <th>Quantity</th>
-//                         <th>Price</th>
-//                         <th>Size</th>
-//                         <th>Action</th>
-//                     </tr>
-//                 </thead>
-//             </table>
-//         </div>
-//     </div>
-//   );
-// }
-
 export default App;
