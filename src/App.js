@@ -33,6 +33,30 @@ async function getProductsTable() {
   }
 }
 
+function ProductsTable(){
+  return(
+    <div id="product-table">
+          <header>
+            <h1 className="title">Product Details</h1>
+          </header>
+          <table className="table">
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Colour</th>
+                      <th>Type</th>
+                      <th>Quantity</th>
+                      <th>Price</th>
+                      <th>Size</th>
+                      <th>Action</th>
+                  </tr>
+              </thead>
+          </table>
+      </div>
+  );
+}
+
 class App extends Component {
   state = {
     data: null,
@@ -60,25 +84,7 @@ class App extends Component {
   render() {
     return (
       <div id="container">
-        <header>
-            <h1 className="title">Product Details</h1>
-        </header>
-        <div id="product-table">
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Colour</th>
-                        <th>Type</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Size</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
+        <ProductsTable/>
       </div>
     );
   }

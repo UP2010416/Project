@@ -1,3 +1,5 @@
+import React from 'react';
+
 function LoginForm(){
     return (
         <form className="form" id="login">
@@ -8,15 +10,28 @@ function LoginForm(){
           <div className="form-boxes">
             <input type="text" className="form-input" placeholder="Password"></input>
           </div>
-          <button className="form-button" type="submit">Sign In</button>
+          <SubmitButton/>
         </form>
     );
 }
 
+function SubmitButton(){
+  function handleClick(){
+    
+  }
+  return (
+    <button className="form-button" type="submit" onClick={handleClick}>
+      Sign In
+    </button>
+  );
+}
+
 function LoginPage(){
+  let content;
+  content = <LoginForm/>
   return (
     <div id="container">
-      <LoginForm/>
+      {content}
     </div>
   );
 }
