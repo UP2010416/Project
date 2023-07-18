@@ -33,8 +33,8 @@ async function getProductsTable() {
   }
 }
 
-function ProductsTable(){
-  return(
+function ProductsTable() {
+  return (
     <div id="product-table">
           <header>
             <h1 className="title">Product Details</h1>
