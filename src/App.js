@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { callBackendAPI } from './api/api.js';
 
 async function getProductsTable() {
   try {
@@ -64,22 +65,12 @@ class App extends Component {
 
   async componentDidMount() {
     try {
-      const res = await this.callBackendAPI();
+      const res = await callBackendAPI();
       this.setState({ data: res.express });
     } catch (error) {
       console.log(error);
     }
   }
-
-  callBackendAPI = async () => {
-    const response = await fetch('/express_backend');
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message);
-    }
-    return body;
-  };
 
   render() {
     return (

@@ -1,5 +1,5 @@
-import React from 'react';
-import bcrypt from 'bcrypt';
+import React, { Component } from 'react';
+import { callBackendAPI } from './api/api.js';
 
 function LoginForm() {
   return (
@@ -16,54 +16,67 @@ function LoginForm() {
   );
 }
 
-function SubmitButton() {
-  function handleClick() {
-    const username = document.querySelector('#username-box').value;
-    const password = document.querySelector('#password-box').value;
-
-    bcrypt.genSalt(10, function (err, hash) {
-      bcrypt.hash(password, salt, function (err, hash) {
-        if (err) {
-          console.error(err);
-          return;
-        }
-
-        fetch('/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username,
-            password: hash,
-          }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
+async function handleClick() {
+  const username = document.querySelector('#username-box').value;
+  const password = document.querySelector('#password-box').value;
+  console.log(username);
+  console.log(password);
+  const payload = {
+    username,
+    password,
+  };
+  console.log(JSON.stringify(payload));
+  try {
+    const response = await fetch('login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
     });
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+    }
+  } catch (error) {
+    console.error(error);
   }
+}
+
+function SubmitButton() {
   return (
-    <button className="form-button" type="submit" onClick={handleClick}>
+    <button className="form-button" type="button" onClick={handleClick}>
       Sign In
     </button>
   );
 }
 
-function LoginPage() {
-  let content;
-  content = <LoginForm/>;
-  return (
-    <div id="container">
-      {content}
-    </div>
-  );
+class LoginPage extends Component {
+  state = {
+    data: null,
+  };
+
+  async componentDidMount() {
+    try {
+      const res = await callBackendAPI();
+      this.setState({ data: res.express });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  render() {
+    return (
+      <div id="container">
+        <LoginForm/>
+      </div>
+    );
+  }
 }
+
+const response = await fetch('/getProducts');
+console.log(response.json());
 
 export default LoginPage;
 

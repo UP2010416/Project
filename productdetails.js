@@ -1,6 +1,5 @@
 import config from './config.js';
 import Postgres from 'pg';
-import bcrypt from 'bcrypt';
 
 const sql = new Postgres.Client(config);
 sql.connect();
@@ -16,17 +15,14 @@ export async function getProductsTable() {
   return result.rows;
 }
 
-export async function findLoginDetails(username, hash) {
+export async function findStoredHash(username) {
   try {
     const q = 'SELECT * FROM UserData WHERE user_username = $1;';
-    const user = await sql.query(q, [username]);
-    if (!user) {
+    const result = await sql.query(q, [username]);
+    if (!result) {
       return false;
     }
-
-    const storedHash = user.user_passwordhash;
-    const isPasswordMatching = await bcrypt.compare(hash, storedHash);
-    return isPasswordMatching;
+    return result.rows[0];
   } catch (error) {
     console.error('Error checking login credentials: ', error);
     return false;
