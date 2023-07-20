@@ -18,6 +18,10 @@ async function checkLoginDetails(req, res) {
   const { username, password } = req.body;
   try {
     const result = await db.findStoredHash(username);
+    if (!result){
+      res.json(false);
+      return;
+    }
     const storedHash = result.user_passwordhash;
     const isPasswordMatching = await bcrypt.compare(password, storedHash);
     res.json(isPasswordMatching);

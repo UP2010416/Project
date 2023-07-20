@@ -16,7 +16,7 @@ function LoginForm() {
   );
 }
 
-async function handleClick() {
+async function handleLogin() {
   const username = document.querySelector('#username-box').value;
   const password = document.querySelector('#password-box').value;
   console.log(username);
@@ -36,6 +36,9 @@ async function handleClick() {
     });
     if (response.ok) {
       const data = await response.json();
+      if (!data) {
+        alert('Username or Password is incorrect');
+      }
       console.log(data);
     }
   } catch (error) {
@@ -45,7 +48,7 @@ async function handleClick() {
 
 function SubmitButton() {
   return (
-    <button className="form-button" type="button" onClick={handleClick}>
+    <button className="form-button" type="button" onClick={handleLogin}>
       Sign In
     </button>
   );
@@ -74,9 +77,6 @@ class LoginPage extends Component {
     );
   }
 }
-
-const response = await fetch('/getProducts');
-console.log(response.json());
 
 export default LoginPage;
 
