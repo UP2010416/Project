@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { callBackendAPI } from './api/api.js';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
   return (
@@ -16,37 +18,39 @@ function LoginForm() {
   );
 }
 
-async function handleLogin() {
-  const username = document.querySelector('#username-box').value;
-  const password = document.querySelector('#password-box').value;
-  console.log(username);
-  console.log(password);
-  const payload = {
-    username,
-    password,
-  };
-  console.log(JSON.stringify(payload));
-  try {
-    const response = await fetch('login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-    if (response.ok) {
-      const data = await response.json();
-      if (!data) {
-        alert('Username or Password is incorrect');
-      }
-      console.log(data);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 function SubmitButton() {
+  const navigate = useNavigate();
+
+  async function handleLogin() {
+    const username = document.querySelector('#username-box').value;
+    const password = document.querySelector('#password-box').value;
+    console.log(username);
+    console.log(password);
+    const payload = {
+      username,
+      password,
+    };
+    console.log(JSON.stringify(payload));
+    try {
+      const response = await axios.post('login', payload, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.status === 200) {
+        const data = response.data;
+        if (!data) {
+          alert('Username or Password is incorrect');
+        } else {
+          navigate('/products');
+          console.log(data);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <button className="form-button" type="button" onClick={handleLogin}>
       Sign In
