@@ -17,6 +17,12 @@ export async function getProductsTable() {
   return result.rows;
 }
 
+export async function getTransactionsTable(){
+  const q = 'SELECT * FROM InventoryTransaction ORDER BY transaction_date DESC';
+  const result = await sql.query(q);
+  return result.rows;
+}
+
 export async function findStoredHash(username) {
   try {
     const q = 'SELECT * FROM UserData WHERE user_username = $1;';

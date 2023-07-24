@@ -27,8 +27,12 @@ app.use(session({
 }));
 
 // get products table from database
-async function getTable(req, res) {
+async function getProducts(req, res) {
   res.json(await db.getProductsTable());
+}
+
+async function getTransactions(req, res){
+  res.json(await db.getTransactionsTable());
 }
 
 // checks plaintext password against hashed password and checks if username is valid
@@ -62,6 +66,17 @@ async function checkLogin(req, res){
   }
 }
 
+async function destroySession(req, res){
+  req.session.destroy(function(err) {
+    if(err){
+      console.log(err);
+      res.status(500).send({ message: 'There was an error logging out, try again' });
+    } else {
+      res.status(200).send({ message: 'Successfully Logged Out' });
+    }
+  });
+}
+
 // async function wrapper for error handling
 function asyncWrap(f) {
   return (req, res, next) => {
@@ -74,6 +89,8 @@ function asyncWrap(f) {
 app.get('/express_backend', (req, res) => {
   res.send({ express: 'EXPRESS BACKEND CONNECTED TO REACT'});
 })
-app.get('/getProducts', asyncWrap(getTable));
+app.get('/getProducts', asyncWrap(getProducts));
+app.get('/getTransactions', asyncWrap(getTransactions));
 app.post('/login', asyncWrap(checkLoginDetails));
 app.get('/login', asyncWrap(checkLogin));
+app.post('/logout', asyncWrap(destroySession));

@@ -1,28 +1,15 @@
 import React, { Component, useEffect, useState } from 'react';
 import axios from 'axios';
 import { callBackendAPI } from './api/api.js';
-// import { useNavigate } from 'react-router-dom';
-
+import { Pagination } from 'react-bootstrap';
 
 function ProductsTable() {
   console.log('Rendering Products');
-  // const navigate = useNavigate();
   const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
-    // async function fetchAndCheckAuth() {
-    //   try {
-    //     const response = await axios.get('login');
-    //     if (response.status === 200) {
-    //       if (response.data.loggedIn === false) {
-    //         navigate('/');
-    //       }
-    //     }
-    //   } catch (error) {
-    //     console.error('Error', error);
-    //   }
-    // }
-    // fetchAndCheckAuth();
     const fetchData = async () => {
       try {
         const response = await axios.get('getProducts');
@@ -39,15 +26,20 @@ function ProductsTable() {
     fetchData();
   }, []);
 
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const currentPageData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  const handleClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   const link1 = '<a href="update">Update</a>';
   const link2 = '<a href="delete">Delete</a>';
 
   return (
-    <div id="product-table">
-      <header>
-        <h1 className="title">Product Details</h1>
-      </header>
+    <div id="product-table" className="table table-bordered table-striped">
       <table className="table">
+        <caption>Products</caption>
         <thead>
           <tr>
             <th>ID</th>
@@ -61,7 +53,7 @@ function ProductsTable() {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => {
+          {currentPageData.map((item, index) => {
             return (
               <tr key={index}>
                 <td>{item.product_id}</td>
@@ -77,6 +69,13 @@ function ProductsTable() {
           })}
         </tbody>
       </table>
+      <Pagination>
+        {[...Array(totalPages).keys()].map(page =>
+          <Pagination.Item key={page + 1} active={page + 1 === currentPage} onClick={() => handleClick(page + 1)}>
+            {page + 1}
+          </Pagination.Item>,
+        )}
+      </Pagination>
     </div>
   );
 }
@@ -105,60 +104,3 @@ class Products extends Component {
 }
 
 export default Products;
-
-// async function getProductsTable() {
-//   try {
-//     const response = await fetch('getProducts');
-//     const table = document.querySelector('.table');
-//     let obj;
-//     if (response.ok) {
-//       obj = await response.json();
-//       const link1 = '<a href="update">Update</a>';
-//       const link2 = '<a href="delete">Delete</a>';
-//       for (let i = 0; i < obj.length; i++) {
-//         const record = Object.entries(obj[i]);
-//         const newRow = table.insertRow(-1);
-//         for (let j = 0; j < record.length; j++) {
-//           const newCell = newRow.insertCell(j);
-//           const newText = document.createTextNode(record[j][1]);
-//           newCell.appendChild(newText);
-//         }
-//         const actionCell = newRow.insertCell(-1);
-//         actionCell.innerHTML = link1 + ' ' + link2;
-//       }
-
-//       console.log(obj);
-//       console.log(Object.entries(obj[0]));
-//       console.log(obj[1]);
-//     } else {
-//       obj = [{ msg: 'failed to load table' }];
-//       console.log(obj);
-//     }
-//   } catch (error) {
-//     console.log('Error fetching data:', error);
-//   }
-// }
-
-// function ProductsTable() {
-//   return (
-//     <div id="product-table">
-//           <header>
-//             <h1 className="title">Product Details</h1>
-//           </header>
-//           <table className="table">
-//               <thead>
-//                   <tr>
-//                       <th>ID</th>
-//                       <th>Name</th>
-//                       <th>Colour</th>
-//                       <th>Type</th>
-//                       <th>Quantity</th>
-//                       <th>Price</th>
-//                       <th>Size</th>
-//                       <th>Action</th>
-//                   </tr>
-//               </thead>
-//           </table>
-//       </div>
-//   );
-// }

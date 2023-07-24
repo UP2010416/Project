@@ -16,7 +16,20 @@ html, body {
     flex-direction: column;
 }
 
-header {
+.navigation-bar {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     background-color: skyblue;
+    padding: 10px;
+}
+
+#custom-dropdown{
+    padding: 10px;
+}
+
+caption{
+    caption-side: top;
+    font-size: 20px;
+    padding: 10px;
 }
