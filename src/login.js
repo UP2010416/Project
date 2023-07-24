@@ -1,9 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, useContext, useEffect } from 'react';
+import { AuthContext } from './AuthProvider.js';
 import axios from 'axios';
 import { callBackendAPI } from './api/api.js';
 import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
+  const navigate = useNavigate();
+  const { loggedIn } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate('/products');
+    }
+  }, [loggedIn, navigate]);
   return (
         <form className="form" id="login">
           <h1 className="form-title">Login</h1>
@@ -20,6 +29,7 @@ function LoginForm() {
 
 function SubmitButton() {
   const navigate = useNavigate();
+  const { setLoggedIn } = useContext(AuthContext);
 
   async function handleLogin() {
     const username = document.querySelector('#username-box').value;
@@ -39,9 +49,10 @@ function SubmitButton() {
       });
       if (response.status === 200) {
         const data = response.data;
-        if (!data) {
+        if (data === false) {
           alert('Username or Password is incorrect');
         } else {
+          setLoggedIn(true);
           navigate('/products');
           console.log(data);
         }

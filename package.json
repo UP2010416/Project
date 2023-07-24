@@ -28,6 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "setuppg": "createdb inventoryapp && psql inventoryapp < inventoryapp.sql",
+    "droppg": "dropdb --if-exists inventoryapp",
     "lint": "npx eslint svr.js productdetails.js config.js src/App.js src/index.js src/login.js",
     "lintfix": "npx eslint --fix svr.js productdetails.js config.js src/App.js src/index.js src/login.js"
   },

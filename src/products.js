@@ -1,16 +1,28 @@
 import React, { Component, useEffect, useState } from 'react';
 import axios from 'axios';
 import { callBackendAPI } from './api/api.js';
+// import { useNavigate } from 'react-router-dom';
 
 
 function ProductsTable() {
-  axios.defaults.withCredentials = true;
+  console.log('Rendering Products');
+  // const navigate = useNavigate();
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get('login').then((response) => {
-      console.log(response);
-    });
+    // async function fetchAndCheckAuth() {
+    //   try {
+    //     const response = await axios.get('login');
+    //     if (response.status === 200) {
+    //       if (response.data.loggedIn === false) {
+    //         navigate('/');
+    //       }
+    //     }
+    //   } catch (error) {
+    //     console.error('Error', error);
+    //   }
+    // }
+    // fetchAndCheckAuth();
     const fetchData = async () => {
       try {
         const response = await axios.get('getProducts');

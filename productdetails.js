@@ -1,3 +1,5 @@
+// psql database CRUD operations
+
 import config from './config.js';
 import Postgres from 'pg';
 
