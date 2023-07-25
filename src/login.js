@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
-import React, { Component, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AuthContext } from './AuthProvider.js';
 import axios from 'axios';
-import { callBackendAPI } from './api/api.js';
 import { useNavigate } from 'react-router-dom';
 
-function LoginForm() {
+function LoginPage() {
   const navigate = useNavigate();
   const { loggedIn, setLoggedIn } = useContext(AuthContext);
 
@@ -52,6 +51,7 @@ function LoginForm() {
   }
 
   return (
+    <div id = "login-form">
         <form className="form" id="login" onSubmit={handleLogin}>
           <h1 className="form-title">Login</h1>
           <div className="form-boxes">
@@ -62,6 +62,7 @@ function LoginForm() {
           </div>
           <SubmitButton handleLogin = {handleLogin} />
         </form>
+    </div>
   );
 }
 
@@ -73,35 +74,4 @@ function SubmitButton() {
   );
 }
 
-class LoginPage extends Component {
-  state = {
-    data: null,
-  };
-
-  async componentDidMount() {
-    try {
-      const res = await callBackendAPI();
-      this.setState({ data: res.express });
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  render() {
-    return (
-      <div id="container">
-        <LoginForm/>
-      </div>
-    );
-  }
-}
-
 export default LoginPage;
-
-// to add into LoginPage at a later date:
-// {isLoggedIn ? (
-//   <App/>
-// ) : (
-//   <LoginPage/>
-// )}

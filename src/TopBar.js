@@ -28,6 +28,7 @@ function TopBar() {
             <Dropdown.Menu>
             <Dropdown.Item onClick = {() => navigate('/products')}>Products</Dropdown.Item>
             <Dropdown.Item onClick = {() => navigate('/transactions')}>Transactions</Dropdown.Item>
+            <Dropdown.Item onClick = {() => navigate('/forecasting')}>Forecasting</Dropdown.Item>
             <Dropdown.Item onClick = { handleLogout }>Logout</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>

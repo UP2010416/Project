@@ -1,10 +1,9 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { callBackendAPI } from './api/api.js';
 import { Pagination, Button } from 'react-bootstrap';
 import { AddProductModal } from './AddProductModal.js';
 
-function ProductsTable() {
+function Products() {
   console.log('Rendering Products');
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,7 +67,7 @@ function ProductsTable() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProducts = async () => {
       try {
         const response = await axios.get('getProducts');
         if (response.status === 200) {
@@ -78,10 +77,10 @@ function ProductsTable() {
           setData([{ msg: 'failed to load table' }]);
         }
       } catch (error) {
-        console.log('Error fetching data:', error);
+        console.error('Error fetching data:', error);
       }
     };
-    fetchData();
+    fetchProducts();
   }, []);
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -128,7 +127,7 @@ function ProductsTable() {
                 <td>£{parseFloat(item.product_price).toFixed(2)}</td>
                 <td>{item.product_size}</td>
                 <td>
-                  <button onClick={() => handleDelete(item.product_id)}>Delete</button>
+                  <Button variant = "danger" onClick={() => handleDelete(item.product_id)}>Delete</Button>
                 </td>
               </tr>
             );
@@ -144,29 +143,6 @@ function ProductsTable() {
       </Pagination>
     </div>
   );
-}
-
-class Products extends Component {
-  state = {
-    data: null,
-  };
-
-  async componentDidMount() {
-    try {
-      const res = await callBackendAPI();
-      this.setState({ data: res.express });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  render() {
-    return (
-      <div id="container">
-        <ProductsTable/>
-      </div>
-    );
-  }
 }
 
 export default Products;

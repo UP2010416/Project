@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import { spawn } from 'child_process';
 
 const app = express();
 const port = process.env.PORT || 5000; // port 5000 (localhost:5000)
@@ -47,7 +48,7 @@ async function checkLoginDetails(req, res) {
     const storedHash = result.user_passwordhash;
     const isPasswordMatching = await bcrypt.compare(password, storedHash);
     if (isPasswordMatching){
-      req.session.user = result.user_username;
+      req.session.user = result.user_id;
       console.log(req.session.user);
     }
     res.json(isPasswordMatching);
@@ -83,9 +84,45 @@ async function addNewProduct(req, res){
   res.json(await db.addProduct(product));
 }
 
+async function addNewTransaction(req, res){
+  const transaction = req.body;
+  transaction.user_id = req.session.user
+  console.log(transaction);
+  res.json(await db.addTransaction(transaction));
+}
+
 async function deleteProduct(req, res){
   console.log(req.body.id);
   res.json(await db.deleteProduct(req.body.id));
+}
+
+async function runPython(req, res){
+  const data = await db.prepareForecastData();
+  console.log(data);
+  let payload = '';
+  const python = spawn('python', ['./prophet/forecastmodel.py']);
+
+  python.stdin.write(JSON.stringify(data));
+  python.stdin.end();
+
+  python.stdout.on('data', function (data) {
+    console.log('Pipe data from python script ...');
+    payload += data.toString();
+    console.log(payload);
+  });
+
+  python.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+  })
+
+  python.on('close', (code) => {
+    console.log(`child process close all stdio with code ${code}`);
+    try {
+        res.send(JSON.parse(payload));
+    } catch (error) {
+        console.error('Failed to parse JSON', error);
+    }
+  });
 }
 
 // async function wrapper for error handling
@@ -97,9 +134,6 @@ function asyncWrap(f) {
 }
 
 // api routes
-app.get('/express_backend', (req, res) => {
-  res.send({ express: 'EXPRESS BACKEND CONNECTED TO REACT'});
-})
 app.get('/getProducts', asyncWrap(getProducts));
 app.get('/getTransactions', asyncWrap(getTransactions));
 app.post('/login', asyncWrap(checkLoginDetails));
@@ -107,3 +141,5 @@ app.get('/login', asyncWrap(checkLogin));
 app.post('/logout', asyncWrap(destroySession));
 app.post('/addNewProduct', asyncWrap(addNewProduct));
 app.post('/deleteProduct', asyncWrap(deleteProduct));
+app.get('/createForecast', asyncWrap(runPython));
+app.post('/addNewTransaction', asyncWrap(addNewTransaction));

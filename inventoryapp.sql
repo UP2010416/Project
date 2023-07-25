@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS Products(
     product_quantity INTEGER NOT NULL,
     product_price NUMERIC NOT NULL,
     product_size VARCHAR(40) NOT NULL
-
 );
 
 CREATE TABLE IF NOT EXISTS UserData(

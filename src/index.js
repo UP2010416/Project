@@ -9,6 +9,7 @@ import LoginPage from './Login.js';
 import Products from './Products.js';
 import TopBar from './TopBar.js';
 import Transactions from './Transactions.js';
+import Forecasting from './Forecasting.js';
 
 export default function App() {
   return (
@@ -16,9 +17,10 @@ export default function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element = {<LoginPage />} />
-          <Route path="/products" element = {<PrivateRoute><TopBar/><Products /></PrivateRoute>} />
+          <Route path="/products" element = {<PrivateRoute><TopBar /><Products /></PrivateRoute>} />
           <Route path="*" element = {<p>Error 404: This doesn&apos;t exist!</p>} />
-          <Route path="/transactions" element = {<PrivateRoute><TopBar/><Transactions /></PrivateRoute>} />
+          <Route path="/transactions" element = {<PrivateRoute><TopBar /><Transactions /></PrivateRoute>} />
+          <Route path="/forecasting" element = {<PrivateRoute><TopBar /><Forecasting /></PrivateRoute>} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

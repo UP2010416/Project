@@ -50,11 +50,29 @@ export async function addProduct(product){
   } catch (error) {
     console.error('Error adding new product: ', error);
   }
+}
 
+export async function addTransaction(transaction){
+  try{
+    const q = 'INSERT INTO InventoryTransaction (product_id, user_id, transaction_date, quantity_change, transaction_type) VALUES ($1, $2, $3, $4, $5)';
+    const result = await sql.query(q, [transaction.product_id, transaction.user_id, transaction.transaction_date, transaction.quantity_change,transaction.transaction_type]);
+    return result;
+  } catch (error){
+    console.error('Error adding new transaction', error);
+  }
 }
 
 export async function deleteProduct(id){
   const q = 'DELETE FROM Products WHERE product_id = $1'
-  const result = await sql.query(q, [id])
+  const result = await sql.query(q, [id]);
   return result;
+}
+
+export async function prepareForecastData(){
+  const q = `SELECT TO_CHAR(transaction_date, 'YYYY-MM-DD') AS date, ABS(quantity_change) as sales
+             FROM InventoryTransaction
+             WHERE transaction_type = 'Sale'
+             ORDER BY date;`;
+  const result = await sql.query(q);
+  return result.rows;
 }
