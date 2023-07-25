@@ -5,7 +5,7 @@ import { AuthProvider } from './AuthProvider.js';
 import PrivateRoute from './PrivateRoute.js';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import LoginPage from './login.js';
+import LoginPage from './Login.js';
 import Products from './Products.js';
 import TopBar from './TopBar.js';
 import Transactions from './Transactions.js';

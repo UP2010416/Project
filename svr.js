@@ -77,6 +77,17 @@ async function destroySession(req, res){
   });
 }
 
+async function addNewProduct(req, res){
+  const product = req.body;
+  console.log(product);
+  res.json(await db.addProduct(product));
+}
+
+async function deleteProduct(req, res){
+  console.log(req.body.id);
+  res.json(await db.deleteProduct(req.body.id));
+}
+
 // async function wrapper for error handling
 function asyncWrap(f) {
   return (req, res, next) => {
@@ -94,3 +105,5 @@ app.get('/getTransactions', asyncWrap(getTransactions));
 app.post('/login', asyncWrap(checkLoginDetails));
 app.get('/login', asyncWrap(checkLogin));
 app.post('/logout', asyncWrap(destroySession));
+app.post('/addNewProduct', asyncWrap(addNewProduct));
+app.post('/deleteProduct', asyncWrap(deleteProduct));

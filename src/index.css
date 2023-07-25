@@ -25,11 +25,32 @@ html, body {
 }
 
 #custom-dropdown{
-    padding: 10px;
+    padding: 5px;
 }
 
 caption{
     caption-side: top;
     font-size: 20px;
     padding: 10px;
+}
+
+.pagination{
+    padding:10px;
+}
+
+.table-header{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+}
+
+.table-heading{
+    margin: 0;
+    padding: 0;
+}
+
+#nav-bar-title{
+    margin: 0;
+    padding: 0;
 }

@@ -35,8 +35,10 @@ function TransactionsTable() {
 
   return (
     <div id="transactions-table" className="table table-bordered table-striped">
+      <div className="table-header">
+        <h2 className="table-heading">Transactions</h2>
+      </div>
       <table className="table">
-        <caption>Transactions</caption>
         <thead>
           <tr>
             <th>ID</th>
@@ -55,7 +57,7 @@ function TransactionsTable() {
             return (
               <tr key={index}>
                 <td>{item.transaction_id}</td>
-                <td>{item.product_id}</td>
+                <td>{item.product_name}</td>
                 <td>{item.user_id}</td>
                 <td>{formattedDate}</td>
                 <td>{absoluteQuantityChange}</td>
@@ -65,7 +67,7 @@ function TransactionsTable() {
           })}
         </tbody>
       </table>
-      <Pagination>
+      <Pagination className = "pagination">
         {[...Array(totalPages).keys()].map(page =>
           <Pagination.Item key={page + 1} active={page + 1 === currentPage} onClick={() => handleClick(page + 1)}>
             {page + 1}
