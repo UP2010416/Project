@@ -1,11 +1,12 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { callBackendAPI } from './api/api.js';
 import { Pagination, Button } from 'react-bootstrap';
 import { AddProductModal } from './AddProductModal.js';
 
-function ProductsTable() {
+function Products() {
   console.log('Rendering Products');
+
+  // states
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -18,6 +19,7 @@ function ProductsTable() {
     product_size: '',
   });
 
+  // handles input changes when adding a new product, makes sure price is a float
   const handleInputChange = (event) => {
     let { name, value } = event.target;
     if (name === 'product_price') {
@@ -30,6 +32,7 @@ function ProductsTable() {
     });
   };
 
+  // add new product function, sends request to server, which creates the new product in the database
   const handleAddProduct = async () => {
     try {
       const response = await axios.post('addNewProduct', newProduct);
@@ -49,6 +52,7 @@ function ProductsTable() {
     }
   };
 
+  // delete product function, sends request to server, which deletes the product in the database
   const handleDelete = async (id) => {
     try {
       const response = await axios.post('deleteProduct', { id });
@@ -67,8 +71,9 @@ function ProductsTable() {
     }
   };
 
+  // products fetched from database
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProducts = async () => {
       try {
         const response = await axios.get('getProducts');
         if (response.status === 200) {
@@ -78,12 +83,13 @@ function ProductsTable() {
           setData([{ msg: 'failed to load table' }]);
         }
       } catch (error) {
-        console.log('Error fetching data:', error);
+        console.error('Error fetching data:', error);
       }
     };
-    fetchData();
-  }, []);
+    fetchProducts();
+  }, []); // runs once
 
+  // Pagination for products table if there are a large amount of stored products
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const currentPageData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
@@ -128,7 +134,7 @@ function ProductsTable() {
                 <td>£{parseFloat(item.product_price).toFixed(2)}</td>
                 <td>{item.product_size}</td>
                 <td>
-                  <button onClick={() => handleDelete(item.product_id)}>Delete</button>
+                  <Button variant = "danger" onClick={() => handleDelete(item.product_id)}>Delete</Button>
                 </td>
               </tr>
             );
@@ -144,29 +150,6 @@ function ProductsTable() {
       </Pagination>
     </div>
   );
-}
-
-class Products extends Component {
-  state = {
-    data: null,
-  };
-
-  async componentDidMount() {
-    try {
-      const res = await callBackendAPI();
-      this.setState({ data: res.express });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  render() {
-    return (
-      <div id="container">
-        <ProductsTable/>
-      </div>
-    );
-  }
 }
 
 export default Products;

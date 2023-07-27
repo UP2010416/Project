@@ -5,6 +5,9 @@ import axios from 'axios';
 
 function TopBar() {
   const navigate = useNavigate();
+
+  // logout request sent to server, destroys user session and refreshes the page
+  // With the AuthProvider implementation, this guarantees the user is redirected to the login page on logout
   async function handleLogout() {
     try {
       const response = await axios.post('/logout');
@@ -28,6 +31,7 @@ function TopBar() {
             <Dropdown.Menu>
             <Dropdown.Item onClick = {() => navigate('/products')}>Products</Dropdown.Item>
             <Dropdown.Item onClick = {() => navigate('/transactions')}>Transactions</Dropdown.Item>
+            <Dropdown.Item onClick = {() => navigate('/forecasting')}>Forecasting</Dropdown.Item>
             <Dropdown.Item onClick = { handleLogout }>Logout</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>

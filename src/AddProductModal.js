@@ -1,7 +1,12 @@
 /* eslint-disable react/prop-types */
+
+// This is a Modal which allows a user to add products in Products.js
 import React from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
+
+// 'mb-3' - bootstrap class which formats each form to have 1 rem of space below each Form.Group
+// Modal takes several props passed down from a parent function/class
 export function AddProductModal({ show, handleClose, handleAddProduct, handleInputChange }) {
   return (
     <Modal show={show} onHide={handleClose}>
@@ -10,7 +15,7 @@ export function AddProductModal({ show, handleClose, handleAddProduct, handleInp
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-3"> mb-3 bootstrap class (1rem)
             <Form.Label>Name</Form.Label>
             <Form.Control type="text" name="product_name" onChange={handleInputChange} />
           </Form.Group>
