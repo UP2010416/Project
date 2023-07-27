@@ -11,6 +11,11 @@ import TopBar from './TopBar.js';
 import Transactions from './Transactions.js';
 import Forecasting from './Forecasting.js';
 
+// App makes use of react-router routes to navigate between pages
+// All Routes/Components wrapped with 'AuthProvider'
+// Private Routes rendered depending on AuthContext, i.e. logged in or not, no unauthorised access
+// AuthContext is defined in AuthProvider.js
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -33,7 +38,3 @@ root.render(
     <App/>
   </React.StrictMode>,
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

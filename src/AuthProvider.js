@@ -3,12 +3,17 @@ import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+// New Context created (this is shared for the entire react component tree)
 export const AuthContext = createContext();
+
 export function AuthProvider({ children }) {
   const navigate = useNavigate();
+
+  // hooks to manage login state, these states are changed depending on validity from server (below)
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  // On component load, check auth status with server (localhost:5000)
   useEffect(() => {
     const fetchAuthStatus = async () => {
       try {

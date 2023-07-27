@@ -6,8 +6,10 @@ import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
   const navigate = useNavigate();
+  // using AuthContext, login state can be checked
   const { loggedIn, setLoggedIn } = useContext(AuthContext);
 
+  // if the user is logged in already (this is checked with the server) then navigate to products page
   useEffect(() => {
     if (loggedIn) {
       navigate('/products');
@@ -28,6 +30,7 @@ function LoginPage() {
       password,
     };
 
+    // login post request sent to the server, if credentials are correct, then log in state (from authprovider) is set
     console.log(JSON.stringify(payload));
     try {
       const response = await axios.post('login', payload, {

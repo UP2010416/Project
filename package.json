@@ -18,7 +18,6 @@
     "pg": "^8.11.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.8.0",
-    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
@@ -31,8 +30,8 @@
     "eject": "react-scripts eject",
     "setuppg": "createdb inventoryapp && psql inventoryapp < inventoryapp.sql",
     "droppg": "dropdb --if-exists inventoryapp",
-    "lint": "npx eslint svr.js productdetails.js config.js src/App.js src/index.js src/login.js",
-    "lintfix": "npx eslint --fix svr.js productdetails.js config.js src/App.js src/index.js src/login.js"
+    "lint": "eslint ./*.js ./src/**/*.js",
+    "lintfix": "eslint --fix ./*.js ./src/**/*.js"
   },
   "eslintConfig": {
     "extends": [

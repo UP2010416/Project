@@ -2,6 +2,9 @@
 import React from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
+// Similar to the AddProductModal, this lets a user add a new transaction in Transactions.js
+// 'mb-3' - bootstrap class which formats each form to have 1 rem of space below each Form.Group
+// Like AddProductModal, this modal also takes several props including a list of products
 export function AddTransactionModal({ show, handleClose, handleAddTransaction, handleInputChange, products }) {
   const transactionTypes = ['Sale', 'Refund', 'Restock'];
   console.log(products);

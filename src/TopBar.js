@@ -5,6 +5,9 @@ import axios from 'axios';
 
 function TopBar() {
   const navigate = useNavigate();
+
+  // logout request sent to server, destroys user session and refreshes the page
+  // With the AuthProvider implementation, this guarantees the user is redirected to the login page on logout
   async function handleLogout() {
     try {
       const response = await axios.post('/logout');

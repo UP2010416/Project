@@ -5,6 +5,8 @@ import { AddProductModal } from './AddProductModal.js';
 
 function Products() {
   console.log('Rendering Products');
+
+  // states
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -17,6 +19,7 @@ function Products() {
     product_size: '',
   });
 
+  // handles input changes when adding a new product, makes sure price is a float
   const handleInputChange = (event) => {
     let { name, value } = event.target;
     if (name === 'product_price') {
@@ -29,6 +32,7 @@ function Products() {
     });
   };
 
+  // add new product function, sends request to server, which creates the new product in the database
   const handleAddProduct = async () => {
     try {
       const response = await axios.post('addNewProduct', newProduct);
@@ -48,6 +52,7 @@ function Products() {
     }
   };
 
+  // delete product function, sends request to server, which deletes the product in the database
   const handleDelete = async (id) => {
     try {
       const response = await axios.post('deleteProduct', { id });
@@ -66,6 +71,7 @@ function Products() {
     }
   };
 
+  // products fetched from database
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -81,8 +87,9 @@ function Products() {
       }
     };
     fetchProducts();
-  }, []);
+  }, []); // runs once
 
+  // Pagination for products table if there are a large amount of stored products
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const currentPageData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 

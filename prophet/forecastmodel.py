@@ -12,7 +12,7 @@ data_json = json.load(sys.stdin)
 data = pd.DataFrame(data_json)
 data['date'] = pd.to_datetime(data['date'])
 
-# Prepare the data
+# Prepare data
 # Rename columns to 'ds' and 'y' as required by Prophet
 data = data.rename(columns={'date':'ds', 'sales':'y'})
 
@@ -23,13 +23,13 @@ model.fit(data)
 # Generate future dates for the next 21 days (3 weeks)
 future_dates = model.make_future_dataframe(periods=21, freq='D')
 
-# Make predictions
+# predictions
 forecast = model.predict(future_dates)
 
 # Save the forecasted data
-# forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].to_csv('forecast.csv') - no longer needed if the data is being sent back to the server
+# forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].to_csv('forecast.csv') -- Uncomment for csv generation
 
-# Send the JSON response
+# Send JSON response
 response = {}
 forecast_df = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].copy()
 forecast_df['ds'] = forecast_df['ds'].dt.strftime('%Y-%m-%d')  # convert timestamp to string

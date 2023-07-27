@@ -5,12 +5,15 @@ import axios from 'axios';
 function Forecasting() {
   const [chartData, setChartData] = useState({});
   const [loading, setLoading] = useState(true);
+
+  // using useRef, chart values persist even on re-render
   const chartContainer = useRef(null);
   const chartInstance = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // request sent to server to create forecast (forecastmodel.py ran in backend)
         const response = await axios.get('createForecast');
         const forecast = JSON.parse(response.data.forecast);
         console.log(forecast);
@@ -24,6 +27,7 @@ function Forecasting() {
           setChartData({
             labels,
             datasets: [
+              // predicted sales graph
               {
                 label: 'Predicted Sales',
                 data: yhatData,
@@ -31,6 +35,7 @@ function Forecasting() {
                 backgroundColor: 'rgba(75,192,192,0.4)',
                 borderColor: 'rgba(75,192,192,1)',
               },
+              // predicted sales lower bound
               {
                 label: 'Lower Bound',
                 data: yhatLowerData,
@@ -38,6 +43,7 @@ function Forecasting() {
                 backgroundColor: 'rgba(77,255,255,0.1)',
                 borderColor: 'rgba(153,204,255,1)',
               },
+              // predicted sales upper bound
               {
                 label: 'Upper Bound',
                 data: yhatUpperData,
@@ -48,6 +54,7 @@ function Forecasting() {
             ],
           });
         }
+        // loading state set to false (lets graph fully generate before anything is displayed)
         setLoading(false);
       } catch (error) {
         console.error('Error during fetching data:', error);
@@ -57,11 +64,14 @@ function Forecasting() {
   }, []);
 
   useEffect(() => {
+    // check if canvas is available and data exists
     if (chartContainer && chartContainer.current && chartData.labels) {
+      // destroy current chart instance if it exists, then generate a chart
       if (chartInstance.current) {
         chartInstance.current.destroy();
       }
 
+      // new chart instance created and assigned to chartInstance.current
       const ctx = chartContainer.current.getContext('2d');
       chartInstance.current = new Chart(ctx, {
         type: 'line',
@@ -71,6 +81,7 @@ function Forecasting() {
     }
   }, [chartData]);
 
+  // loading message
   if (loading) {
     return <div>Loading...</div>;
   }
