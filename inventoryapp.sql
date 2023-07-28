@@ -29,21 +29,6 @@ CREATE TABLE IF NOT EXISTS InventoryTransaction(
     transaction_type VARCHAR(40) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Suppliers(
-    supplier_id SERIAL PRIMARY KEY,
-    supplier_name VARCHAR(50) NOT NULL,
-    supplier_phone VARCHAR(15),
-    supplier_address1 char NOT NULL,
-    supplier_address2 char,
-    supplier_postcode varchar(9)
-);
-
-CREATE TABLE IF NOT EXISTS ProductSuppliers(
-    supplier_id INTEGER REFERENCES Suppliers(supplier_id),
-    product_id INTEGER REFERENCES Products(product_id),
-    PRIMARY KEY (supplier_id, product_id)
-);
-
 INSERT INTO Products (product_name, product_colour, product_type, product_quantity, product_price, product_size)
 VALUES ('Fuchsia', 'Pink', 'Acrylic', 5, 2.00, '75ml tube');
 INSERT INTO Products (product_name, product_colour, product_type, product_quantity, product_price, product_size)
