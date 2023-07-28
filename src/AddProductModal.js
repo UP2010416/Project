@@ -15,7 +15,7 @@ export function AddProductModal({ show, handleClose, handleAddProduct, handleInp
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group className="mb-3"> mb-3 bootstrap class (1rem)
+          <Form.Group className="mb-3">
             <Form.Label>Name</Form.Label>
             <Form.Control type="text" name="product_name" onChange={handleInputChange} />
           </Form.Group>

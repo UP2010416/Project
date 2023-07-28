@@ -23,7 +23,7 @@ function TopBar() {
 
   return (
     <div className = "navigation-bar">
-        <h1 id="nav-bar-title">Inventory App</h1>
+        <h1 id="nav-bar-title">Stock Management App</h1>
         <Dropdown id = "custom-dropdown">
             <Dropdown.Toggle variant="primary" id="dropdown-basic">
             Menu
